@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <!-- Buefy CSS -->
+		<link rel="stylesheet" href="https://unpkg.com/buefy/lib/buefy.min.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+    </head>
+    <body>
+		<!-- # navbar -->
+		<nav class="navbar" role="navigation" aria-label="main navigation">
+			<div class="container">
+				<div class="navbar-brand">
+					<span class="navbar-item is-size-4 has-text-weight-semibold is-italic">Sample Excel Paser</span>
+				
+					<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					</a>
+				</div>
+				<div class="navbar-menu">
+					<div class="navbar-start">
+						<a class="navbar-item" href="/upload.html">UploadPage</a>
+						<a class="navbar-item" href="/items.html">ItemsPage</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- / navbar -->
+
+		<!-- #hero -->
+		<section class="hero is-primary">
+			<div class="hero-body">
+				<div class="container">
+					<h1 class="title">
+						1. Input Your Excel File
+					</h1>
+					<h2 class="subtitle">
+						파일을 입력주세요
+					</h2>
+				</div>
+			</div>
+		</section>
+		<!-- /hero -->
+		
+		<section class="section">
+			
+			<div id="app" class="container">
+				<form action="/upload" method="POST" encType="multipart/form-data">
+					<section v-show="seen" style="display: none;">
+						<b-field class="file">
+							<b-upload v-model="files" @input="myMet" name="sampleFile">
+								<a class="button is-primary">
+									<b-icon icon="upload"></b-icon>
+									<span>Click to upload</span>
+								</a>
+							</b-upload>
+							<span class="file-name" v-if="files && files.length">
+								{{ files[0].name }}
+							</span>
+							<button class="button" type="submit" v-if="files && files.length">전송</button>
+						</b-field>
+					</section>
+				</form>
+
+			</div>
+		</section>
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="https://unpkg.com/buefy"></script>
+        <script>
+			Vue.use(Buefy.default)
+
+            new Vue({
+                el: '#app',
+                data: {
+                    seen: false,
+                    files: []
+				},
+				methods: {
+					myMet: function() {
+						this.$toast.open({
+							duration: 2000,
+							message: '전송버튼을 눌러주세요^^',
+							position: 'is-bottom',
+							type: 'is-success'
+						})
+					}
+				},
+                mounted: function() {
+                    this.seen = true
+                }
+            })
+        </script>
+    </body>
+
+</html>

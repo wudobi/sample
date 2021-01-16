@@ -1,0 +1,11 @@
+{
+  "name": "my-cluster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.test.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+</head>
+<body>
+	<p>인증 샘플</p>
+
+	<button onclick="login()">로그인</button>
+	<button onclick="logout()">로그아웃</button>
+	<button onclick="connectAPI()">api 연결</button>
+
+
+	<script>
+		function login() {
+			axios.get('http://localhost:8001/login').then(function(response) {
+				const accessToken = response.data.access_token
+
+				localStorage.access_token = accessToken
+				axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.access_token
+
+				alert('로그인되었습니다')
+			})
+		}
+
+		function logout() {
+			delete localStorage.access_token
+			axios.defaults.headers.common['Authorization'] = undefined
+
+			alert('로그아웃되었습니다')
+		}
+
+		function connectAPI() {
+			axios.get('http://localhost:8001/api').then(function(response) {
+				alert(JSON.stringify(response.data))
+			}).catch(function(error) {
+				console.log(error.response)
+
+				if(error.response.status === 401) {
+					alert('인증해주세요')
+				}
+			})
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<html>
+    <head>
+        <!-- Buefy CSS -->
+		<link rel="stylesheet" href="https://unpkg.com/buefy/lib/buefy.min.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+    </head>
+    <body>
+		<!-- # navbar -->
+		<nav class="navbar" role="navigation" aria-label="main navigation">
+			<div class="container">
+				<div class="navbar-brand">
+					<span class="navbar-item is-size-4 has-text-weight-semibold is-italic">Sample Excel Paser</span>
+				
+					<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					</a>
+				</div>
+				<div class="navbar-menu">
+					<div class="navbar-start">
+						<a class="navbar-item" href="/upload.html">UploadPage</a>
+						<a class="navbar-item" href="/items.html">ItemsPage</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- / navbar -->
+
+		<!-- #hero -->
+		<section class="hero is-primary">
+			<div class="hero-body">
+				<div class="container">
+					<h1 class="title">
+						2. Check Databases
+					</h1>
+					<h2 class="subtitle">
+						데이터베이스 테이블을 확인하세요
+					</h2>
+				</div>
+			</div>
+		</section>
+		<!-- /hero -->
+
+		<section class="section">
+			<div id="app">
+
+				<section v-show="seen" style="display: none;">
+					<b-table :data="data" :columns="columns" :loading="isLoading" :paginated="isPaginated" :per-page="perPage" :pagination-simple="isPaginationSimple"></b-table>
+				</section>
+
+			</div>
+		</section>
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="https://unpkg.com/buefy"></script>
+        <script>
+			Vue.use(Buefy.default)
+
+			new Vue({
+				el: '#app',
+				data: {
+					seen: false,
+					data: [],
+					columns: [{
+						field: 'id',
+						label: 'ID',
+						numeric: true
+					}, {
+						field: '구매자명',
+						label: '구매자명',
+					}, {
+						field: "구매자ID",
+						label: "구매자ID"
+					},
+					{
+						field: "수취인명",
+						label: "수취인명"
+					},
+					{
+						field: "주문상태",
+						label: "주문상태"
+					},
+					{
+						field: "옵션정보1",
+						label: "옵션정보1"
+					},
+					{
+						field: "옵션정보2",
+						label: "옵션정보2"
+					},
+					{
+						field: "옵션정보3",
+						label: "옵션정보3"
+					},
+					{
+						field: "수량",
+						label: "수량"
+					},
+					{
+						field: "수취인연락처1",
+						label: "수취인연락처1"
+					},
+					{
+						field: "배송지",
+						label: "배송지"
+					},
+					{
+						field: "구매자연락처",
+						label: "구매자연락처"
+					},
+					{
+						field: "우편번호",
+						label: "우편번호"
+					}],
+					isLoading: true,
+					isPaginated: true,
+					perPage: 10,
+					isPaginationSimple: true
+				},
+				mounted() {
+					axios.get('http://localhost:3000/sim').then(response => {
+						this.data = response.data
+					}).catch(error => {
+						this.$snackbar.open(error)
+					}).finally(() => {
+						this.isLoading = false
+					})
+
+					this.seen = true
+				}
+			});
+
+        </script>
+    </body>
+
+</html>
